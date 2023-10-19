@@ -1,6 +1,10 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { ThemeProvider } from './components/themeProvider'
+import ClientButton from './components/Button'
+import NavBar from './NavBar'
+import AuthProvider from './api/auth/provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,10 +17,21 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
-}) {
+  }) {
+  const props = {
+    handleEventParams:"you clicked !"
+  }
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <html lang="en" data-theme="winter">
+        <body className={`${inter.className}`}>
+          {/* <ClientButton {...props}>客户端按钮</ClientButton> */}
+          <AuthProvider>
+            <NavBar />
+            <main className='p-5'>
+              {children}
+              </main>
+            </AuthProvider>
+        </body>
+      </html>
   )
 }
